@@ -144,6 +144,8 @@ Example:
           elem.datastate = data;
           elem.visualstate = config;
 
+          console.log('first value: ', data.firstname);
+
           elem.addEventListener('visual-state-changed', function(e){
             lsapi.data.collection[key].config = e.detail;
             lsapi.writeData();
