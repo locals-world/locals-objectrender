@@ -8,6 +8,9 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 <link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../neon-animation/neon-animation.html">
+<link rel="import" href="../neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../neon-animation/animations/hero-animation.html">
 <!-- <link rel="import" href="../locals-object/locals-dataobject.html">
 <link rel="import" href="../locals-object/locals-object.html"> -->
 
@@ -33,13 +36,13 @@ Example:
       }
   
 
-      #rendercanvas {
+      #total {
       width: 100%;
       padding: 0px;
       margin: 0px;
      }
     </style>
-    <div id="rendercanvas"></div>
+    <div id="total"></div>
   </template>
 
 </dom-module>
@@ -62,6 +65,15 @@ Example:
 
     is: 'locals-objectrender',
 
+    listeners: {
+      'tap': 'firetap'
+    },
+
+    behaviors: [
+      Polymer.NeonSharedElementAnimatableBehavior,
+      Polymer.NeonAnimatableBehavior
+    ],
+
     properties: {
 
       objectdata: {
@@ -72,7 +84,32 @@ Example:
       key: {
         type: String,
         observer: '_key'
-      }
+      },
+
+      animationConfig: { 
+          value: function(){
+            return {
+              'entry': {
+                name: 'hero-animation',
+                id: 'hero',
+                toPage: this
+              },
+              'exit': {
+                name: 'hero-animation',
+                id: 'hero',
+                fromPage: this
+              }
+            }
+          }
+        },
+
+      sharedElements: {
+          value: function(){
+           return {
+            'hero': this.$.total
+           } 
+          }
+        }
 
     },
 
@@ -125,6 +162,11 @@ Example:
       this._objectdata();
      },
 
+     firetap: function(){
+      //console.log('tapped!', this.key);
+      this.fire('detail-tapped', {key: this.key, data: this.objectdata});
+     },
+
     _objectdata: function() {
       if(this.objectdata && this.key){  
         var self = this;
@@ -137,8 +179,8 @@ Example:
         //console.log(lsapi);
         
         importPage("../../bower_components/"+component+"/"+component+".html").then(function(){
-          var rendercanvas = self.$.rendercanvas;
-          rendercanvas.innerHTML = '';
+          var total = self.$.total;
+          total.innerHTML = '';
           elem = document.createElement(component);
           elem.class = "object";
           elem.datastate = data;
@@ -156,7 +198,7 @@ Example:
             lsapi.writeData();
           });
           
-          rendercanvas.appendChild(elem);
+          total.appendChild(elem);
 
         }, function(e) {
           console.log('import',e);
