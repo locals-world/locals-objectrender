@@ -91,7 +91,7 @@ Example:
         observer: '_key'
       },
 
-      state: {
+      renderstate: {
         type: String
       },
 
@@ -194,9 +194,7 @@ Example:
           elem.class = "object";
           elem.datastate = data;
           elem.visualstate = config;
-          elem.state = self.state;
-
-          console.log('first value: ', data.firstname);
+          elem.renderstate = self.renderstate;
 
           elem.addEventListener('visual-state-changed', function(e){
             lsapi.data.collection[key].config = e.detail;
@@ -211,7 +209,6 @@ Example:
           total.appendChild(elem);
 
         }, function(e) {
-          console.log('import',e);
         // loading error
        });
     };
