@@ -91,6 +91,10 @@ Example:
         observer: '_key'
       },
 
+      state: {
+        type: String
+      },
+
       animationConfig: { 
           value: function(){
             return {
@@ -190,6 +194,7 @@ Example:
           elem.class = "object";
           elem.datastate = data;
           elem.visualstate = config;
+          elem.state = self.state;
 
           console.log('first value: ', data.firstname);
 
