@@ -95,6 +95,10 @@ Example:
         type: String
       },
 
+      hashfunction: {
+        type: Function 
+      },
+
       animationConfig: { 
           value: function(){
             return {
@@ -176,40 +180,42 @@ Example:
       this.fire('detail-tapped', {key: this.key, data: this.objectdata});
      },
 
-    _objectdata: function() {
+      _objectdata: function() {
       if(this.objectdata && this.key){  
-        var self = this;
-        var component = this.objectdata.component.name;
-        var config = this.objectdata.config;
-        var data = this.objectdata.data;
-        var key = this.key;
+        //var self = this;
+        //var component = this.objectdata.component.name;
+        //var config = this.objectdata.config;
+        //var data = this.objectdata.config;
+        //var key = this.key;
         //console.log(key);
         var lsapi = document.getElementById("lsapi");
         //console.log(lsapi);
         
-        importPage("../../bower_components/"+component+"/"+component+".html").then(function(){
-          var total = self.$.total;
+        importPage("../../bower_components/"+this.objectdata.component.name+"/"+this.objectdata.component.name+".html").then(function(){
+          var total = this.$.total;
           total.innerHTML = '';
-          elem = document.createElement(component);
+          elem = document.createElement(this.objectdata.component.name);
           elem.class = "object";
-          elem.datastate = data;
-          elem.visualstate = config;
-          elem.renderstate = self.renderstate;
-          elem.id = self.key;
+          elem.objectdata = this.objectdata;
+          elem.datastate = this.objectdata.data;
+          elem.visualstate = this.objectdata.config;
+          elem.renderstate = this.renderstate;
+          elem.hashfunction = this.hashfunction;
+          elem.id = this.key;
 
           elem.addEventListener('visual-state-changed', function(e){
-            lsapi.data.collection[key].config = e.detail;
+            lsapi.data.collection[this.key].config = e.detail;
             lsapi.writeData();
           });
 
           elem.addEventListener('data-state-changed', function(e){
-            lsapi.data.collection[key].data = e.detail;
+            lsapi.data.collection[this.key].data = e.detail;
             lsapi.writeData();
           });
           
           total.appendChild(elem);
 
-        }, function(e) {
+        }.bind(this), function(e) {
         // loading error
        });
     };
