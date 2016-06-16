@@ -182,14 +182,8 @@ Example:
 
       _objectdata: function() {
       if(this.objectdata && this.key){  
-        //var self = this;
-        //var component = this.objectdata.component.name;
-        //var config = this.objectdata.config;
-        //var data = this.objectdata.config;
-        //var key = this.key;
-        //console.log(key);
+        
         var lsapi = document.getElementById("lsapi");
-        //console.log(lsapi);
         
         importPage("../../bower_components/"+this.objectdata.component.name+"/"+this.objectdata.component.name+".html").then(function(){
           var total = this.$.total;
