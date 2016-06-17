@@ -198,13 +198,15 @@ Example:
           elem.id = this.key;
 
           elem.addEventListener('visual-state-changed', function(e){
-            lsapi.data.collection[this.key].config = e.detail;
+            lsapi.data.collection[elem.id].config = e.detail.value;
             lsapi.writeData();
           });
 
           elem.addEventListener('data-state-changed', function(e){
-            lsapi.data.collection[this.key].data = e.detail;
-            lsapi.writeData();
+            if (e.detail.value && e.detail.value){              
+              lsapi.data.collection[elem.id].data = e.detail.value;
+              lsapi.writeData();
+            }
           });
           
           total.appendChild(elem);
