@@ -152,6 +152,11 @@ Example:
       // removed from a document.
       //
       // Use this to clean up anything you did in `attached`.
+      //debugger;
+      if (this.elem){
+        this.elem.parentNode.removeChild(this.elem);
+      }
+      console.log('removed element');
     },
 
     // Element Behavior
@@ -210,6 +215,8 @@ Example:
           });
           
           total.appendChild(elem);
+
+          this.elem = elem;
 
         }.bind(this), function(e) {
         // loading error
