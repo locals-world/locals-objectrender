@@ -186,20 +186,21 @@ Example:
      },
 
       _objectdata: function() {
-      if(this.objectdata && this.key){  
+      if(this.key){  
         
         var lsapi = document.getElementById("lsapi");
         
-        importPage("../../bower_components/"+this.objectdata.component.name+"/"+this.objectdata.component.name+".html").then(function(){
+        importPage("../../bower_components/"+this.key+"/"+this.key+".html").then(function(){
           var total = this.$.total;
           total.innerHTML = '';
-          elem = document.createElement(this.objectdata.component.name);
+          elem = document.createElement(this.key);
           elem.class = "object";
-          elem.objectdata = this.objectdata;
-          elem.datastate = this.objectdata.data;
-          elem.visualstate = this.objectdata.config;
+          if (this.objectdata){
+            //elem.objectdata = this.objectdata;
+            elem.datastate = this.objectdata.data;
+            elem.visualstate = this.objectdata.config;
+          }
           elem.renderstate = this.renderstate;
-          elem.hashfunction = this.hashfunction;
           elem.id = this.key;
 
           elem.addEventListener('visual-state-changed', function(e){
