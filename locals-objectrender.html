@@ -193,6 +193,7 @@ Example:
         importPage("../../bower_components/"+this.key+"/"+this.key+".html").then(function(){
           var total = this.$.total;
           total.innerHTML = '';
+          //debugger;
           elem = document.createElement(this.key);
           elem.class = "object";
           if (this.objectdata){
