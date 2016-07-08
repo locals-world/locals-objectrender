@@ -83,12 +83,17 @@ Example:
 
       objectdata: {
         type: Object,
-        observer: '_objectdata'
+        //observer: '_loadelement'
+      },
+
+      path: {
+        type: String,
+        //observer: '_loadelement'
       },
 
       key: {
         type: String,
-        observer: '_key'
+        //observer: '_loadelement'
       },
 
       renderstate: {
@@ -145,6 +150,7 @@ Example:
       // This is a good place to perform any work related to your element's
       // visual state or active behavior (measuring sizes, beginning animations,
       // loading resources, etc).
+      this._loadelement();
     },
 
     detached: function() {
@@ -180,17 +186,18 @@ Example:
       this._objectdata();
      },
 
+
+
      firetap: function(){
       //console.log('tapped!', this.key);
       this.fire('detail-tapped', {key: this.key, data: this.objectdata});
      },
 
-      _objectdata: function() {
+      _loadelement: function() {
       if(this.key){  
         
         var lsapi = document.getElementById("lsapi");
-        
-        importPage("../../bower_components/"+this.key+"/"+this.key+".html").then(function(){
+        importPage("../../bower_components/"+(this.path || this.key)+"/"+this.key+".html").then(function(){
           var total = this.$.total;
           total.innerHTML = '';
           //debugger;
