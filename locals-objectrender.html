@@ -100,6 +100,11 @@ Example:
         type: String
       },
 
+      sizeview: {
+        type: String,
+        observer: '_sizeview'
+      },
+
       hashfunction: {
         type: Function 
       },
@@ -207,6 +212,8 @@ Example:
             //elem.objectdata = this.objectdata;
             elem.datastate = this.objectdata.data;
             elem.visualstate = this.objectdata.config;
+            elem.sizeview = this.sizeview;
+
           }
           elem.renderstate = this.renderstate;
           elem.id = this.key;
@@ -243,6 +250,9 @@ Example:
         }
       };
       return newarray;
+    },
+
+    _sizeview: function(){
     }
 
   });
