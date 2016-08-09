@@ -62,7 +62,7 @@ Example:
     });
   };
 
-  var elem; 
+  var elem;
 
   var object;
 
@@ -100,16 +100,21 @@ Example:
         type: String
       },
 
+      status: {
+        type: String,
+        observer: '_status'
+      },
+
       sizeview: {
         type: String,
         observer: '_sizeview'
       },
 
       hashfunction: {
-        type: Function 
+        type: Function
       },
 
-      animationConfig: { 
+      animationConfig: {
           value: function(){
             return {
               'entry': {
@@ -130,7 +135,7 @@ Example:
           value: function(){
            return {
             'hero': this.$.total
-           } 
+           }
           }
         }
 
@@ -139,7 +144,7 @@ Example:
     // Element Lifecycle
 
     ready: function() {
-      
+
       // `ready` is called after all elements have been configured, but
       // propagates bottom-up. This element's children are ready, but parents
       // are not.
@@ -199,8 +204,8 @@ Example:
      },
 
       _loadelement: function() {
-      if(this.key){  
-        
+      if(this.key){
+
         var lsapi = document.getElementById("lsapi");
         importPage("../../bower_components/"+(this.path || this.key)+"/"+this.key+".html").then(function(){
           var total = this.$.total;
@@ -214,7 +219,7 @@ Example:
             elem.visualstate = this.objectdata.config;
             elem.sizeview = this.sizeview;
             elem.contractaddress = this.contractaddress;
-
+            elem.status = this.status;
           }
           elem.renderstate = this.renderstate;
           elem.id = this.key;
@@ -225,12 +230,12 @@ Example:
           });
 
           elem.addEventListener('data-state-changed', function(e){
-            if (e.detail.value && e.detail.value){              
+            if (e.detail.value && e.detail.value){
               lsapi.data.collection[elem.id].data = e.detail.value;
               lsapi.writeData();
             }
           });
-          
+
           total.appendChild(elem);
 
           this.elem = elem;
@@ -239,6 +244,10 @@ Example:
         // loading error
        });
     };
+    },
+
+    _status: function(){
+      console.log('got status: ', this.status);
     },
 
     object2array: function(input){
